@@ -15,8 +15,10 @@ public enum ApprovalStatus
     Pending,
     Approved,
     Rejected,
-    Suspended
+    Suspended,
+    Inactive
 }
+
 
 public enum JobStatus
 {

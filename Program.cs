@@ -1,4 +1,6 @@
 
+using CampusPlacementManagement.Repositories;
+using CampusPlacementManagement.Repositories.Interfaces;
 using CampusPlacementManagement.Data;
 using CampusPlacementManagement.Data.Seeding;
 using CampusPlacementManagement.Models;
@@ -63,6 +65,10 @@ builder.Services.AddAuthentication(options =>
 
 // Services
 builder.Services.AddScoped<IJwtService, JwtService>();
+
+
+builder.Services.AddScoped<ICollegeRepository, CollegeRepository>();
+builder.Services.AddScoped<ICollegeService, CollegeService>();
 
 builder.Services.AddAuthorization();
 
