@@ -24,6 +24,7 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     public DbSet<InterviewRound> InterviewRounds { get; set; }
     public DbSet<InterviewSchedule> InterviewSchedules { get; set; }
     public DbSet<ApplicationStatusHistory> ApplicationStatusHistories { get; set; }
+    public DbSet<RefreshToken> RefreshTokens { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -205,5 +206,15 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
             .WithMany()
             .HasForeignKey(h => h.UpdatedByUserId)
             .OnDelete(DeleteBehavior.Restrict);
+
+        builder.Entity<RefreshToken>()
+            .HasIndex(r => r.TokenHash)
+            .IsUnique();
+
+        builder.Entity<RefreshToken>()
+            .HasOne(r => r.User)
+            .WithMany(u => u.RefreshTokens)
+            .HasForeignKey(r => r.UserId)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }

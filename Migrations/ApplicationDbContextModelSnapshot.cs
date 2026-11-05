@@ -531,6 +531,44 @@ namespace CampusPlacementManagement.Migrations
                     b.ToTable("RecruitmentDrives");
                 });
 
+            modelBuilder.Entity("CampusPlacementManagement.Models.RefreshToken", b =>
+                {
+                    b.Property<int>("RefreshTokenId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RefreshTokenId"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("ExpiresAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ReplacedByTokenHash")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("RevokedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("TokenHash")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("RefreshTokenId");
+
+                    b.HasIndex("TokenHash")
+                        .IsUnique();
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("RefreshTokens");
+                });
+
             modelBuilder.Entity("CampusPlacementManagement.Models.Student", b =>
                 {
                     b.Property<int>("StudentId")
@@ -900,6 +938,17 @@ namespace CampusPlacementManagement.Migrations
                     b.Navigation("JobOpening");
                 });
 
+            modelBuilder.Entity("CampusPlacementManagement.Models.RefreshToken", b =>
+                {
+                    b.HasOne("CampusPlacementManagement.Models.ApplicationUser", "User")
+                        .WithMany("RefreshTokens")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("CampusPlacementManagement.Models.Student", b =>
                 {
                     b.HasOne("CampusPlacementManagement.Models.College", "College")
@@ -983,6 +1032,8 @@ namespace CampusPlacementManagement.Migrations
                     b.Navigation("CompanyHR");
 
                     b.Navigation("PlacementOfficer");
+
+                    b.Navigation("RefreshTokens");
 
                     b.Navigation("Student");
                 });

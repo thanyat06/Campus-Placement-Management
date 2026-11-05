@@ -22,4 +22,7 @@ public class ApplicationUser : IdentityUser
     public PlacementOfficer? PlacementOfficer { get; set; }
 
     public CompanyHR? CompanyHR { get; set; }
+
+    public ICollection<RefreshToken> RefreshTokens { get; set; }
+    = new List<RefreshToken>();
 }
