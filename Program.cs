@@ -66,9 +66,11 @@ builder.Services.AddAuthentication(options =>
 // Services
 builder.Services.AddScoped<IJwtService, JwtService>();
 
-
 builder.Services.AddScoped<ICollegeRepository, CollegeRepository>();
 builder.Services.AddScoped<ICollegeService, CollegeService>();
+
+builder.Services.AddScoped<IPlacementOfficerRepository, PlacementOfficerRepository>();
+builder.Services.AddScoped<IPlacementOfficerService, PlacementOfficerService>();
 
 builder.Services.AddAuthorization();
 
